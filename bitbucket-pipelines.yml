@@ -45,8 +45,9 @@ pipelines:
           - sfdx force:org:delete --targetusername ciorg --noprompt
           #Create Package Version
           - PACKAGEVERSION="$(sfdx force:package:version:create --package $PACKAGENAME --installationkeybypass --wait 10 --json --targetdevhubusername HubOrg | jq '.result.SubscriberPackageVersionId' | tr -d '"')"
-          - sleep 300 # Wait for package replication.
-          - echo ${PACKAGEVERSION}
+          - echo "Package Version Id - "${PACKAGEVERSION}
+          - echo "Waiting for 5 minutes for package replication"
+          - sleep 5m
           #Create Scratch Org
           - sfdx force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias installorg --wait 10 --durationdays 1
           - sfdx force:org:display --targetusername installorg
