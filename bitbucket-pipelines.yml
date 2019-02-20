@@ -1,11 +1,11 @@
-# This is a sample build configuration for Docker.
-# Check our guides at https://confluence.atlassian.com/x/O1toN for more examples.
+# This file is a sample build configuration for Docker.
+# See the guides at https://confluence.atlassian.com/x/O1toN for more examples.
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
 image: atlassian/default-image:2
 pipelines:
-  default: #this will run for all branches unless specificed otherwise
+  default: #These commands run for all branches unless specified otherwise
     - step:
         script:
           #Assign variables 
@@ -20,7 +20,7 @@ pipelines:
           #Be sure to update the package ID (package ID starts with OHo) or package alias here from the sfdx-project.json file
           - export PACKAGENAME="0Ho0N000000CaTDSA0"
           - export PACKAGEVERSION=""
-          #Create SFDX directory
+          #Create sfdx directory
           - mkdir sfdx
           #Install Salesforce CLI
           - wget -qO- $CLIURL | tar xJ -C sfdx --strip-components 1
@@ -28,7 +28,7 @@ pipelines:
           - export PATH=./sfdx/$(pwd):$PATH
           - sfdx --version
           - sfdx plugins --core
-          #Install JSON processeor
+          #Install JSON processor
           - apt-get install -y jq
           #Decrypt server key
           - openssl enc -nosalt -aes-256-cbc -d -in assets/server.key.enc -out assets/server.key -base64 -K $DECRYPTION_KEY -iv $DECRYPTION_IV
@@ -37,7 +37,7 @@ pipelines:
           #Create scratch org
           - sfdx force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias ciorg --wait 10 --durationdays 1
           - sfdx force:org:display --targetusername ciorg
-          #Push source scratch org
+          #Push source to scratch org
           - sfdx force:source:push --targetusername ciorg
           #Run unit tests on scratch org
           - sfdx force:apex:test:run --targetusername ciorg --wait 10 --resultformat tap --codecoverage --testlevel $TESTLEVEL
