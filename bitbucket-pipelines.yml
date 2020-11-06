@@ -7,6 +7,10 @@ image: salesforce/salesforcedx
 pipelines:
   default: #These commands run for all branches unless specified otherwise
     - step:
+        services:
+          - docker
+        caches:
+          - docker
         script:
           #Assign variables
           - export ROOTDIR=force-app/main/default/
