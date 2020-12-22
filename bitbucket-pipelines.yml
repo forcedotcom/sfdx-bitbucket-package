@@ -3,31 +3,21 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image: atlassian/default-image:2
+image: salesforce/salesforcedx
 pipelines:
   default: #These commands run for all branches unless specified otherwise
     - step:
+        services:
+          - docker
+        caches:
+          - docker
         script:
-          #Assign variables 
-          - export CLIURL=https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz  
-          - export SFDX_AUTOUPDATE_DISABLE=false
-          - export SFDX_USE_GENERIC_UNIX_KEYCHAIN=true
-          - export SFDX_DOMAIN_RETRY=300
-          - export SFDX_DISABLE_APP_HUB=true
-          - export SFDX_LOG_LEVEL=DEBUG
+          #Assign variables
           - export ROOTDIR=force-app/main/default/
           - export TESTLEVEL=RunLocalTests
           #Be sure to update the package ID (package ID starts with OHo) or package alias here from the sfdx-project.json file
           - export PACKAGENAME="0Ho0N000000CaTDSA0"
           - export PACKAGEVERSION=""
-          #Create sfdx directory
-          - mkdir sfdx
-          #Install Salesforce CLI
-          - wget -qO- $CLIURL | tar xJ -C sfdx --strip-components 1
-          - "./sfdx/install"
-          - export PATH=./sfdx/$(pwd):$PATH
-          - sfdx --version
-          - sfdx plugins --core
           #Install JSON processor
           - apt-get install -y jq
           #Decrypt server key
