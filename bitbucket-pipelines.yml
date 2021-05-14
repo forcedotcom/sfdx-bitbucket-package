@@ -21,11 +21,11 @@ pipelines:
           - export PACKAGENAME="0Ho0N000000CaTDSA0"
           - export PACKAGEVERSION=""
           #Create sfdx directory
-          - mkdir sfdx
+          - mkdir ~/sfdx
           #Install Salesforce CLI
-          - wget -qO- $CLIURL | tar xJ -C sfdx --strip-components 1
-          - "./sfdx/install"
-          - export PATH=./sfdx/$(pwd):$PATH
+          #By default, the script installs the current version of Salesforce CLI. To install the release candidate, set the DX_CLI_URL_CUSTOM local variable to the appropriate URL
+          - wget -qO- ${DX_CLI_URL_CUSTOM-$CLIURL} | tar xJ -C ~/sfdx --strip-components 1
+          - export PATH=~/sfdx/bin:$PATH
           - sfdx --version
           - sfdx plugins --core
           #Install JSON processor
