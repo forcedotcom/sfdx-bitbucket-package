@@ -9,7 +9,7 @@ pipelines:
     - step:
         script:
           #Assign variables 
-          - export CLIURL=https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-amd64.tar.xz
+          - export CLIURL=https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
           - export SFDX_AUTOUPDATE_DISABLE=false
           - export SFDX_USE_GENERIC_UNIX_KEYCHAIN=true
           - export SFDX_DOMAIN_RETRY=300
