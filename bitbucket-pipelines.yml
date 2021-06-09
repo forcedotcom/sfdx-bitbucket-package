@@ -46,7 +46,6 @@ pipelines:
           #Create package version
           - PACKAGEVERSION="$(sfdx force:package:version:create --package $PACKAGENAME --installationkeybypass --wait 10 --json --targetdevhubusername HubOrg | jq '.result.SubscriberPackageVersionId' | tr -d '"')"
           - echo "Package Version Id - "${PACKAGEVERSION}
-          - echo "Waiting for 5 minutes for package replication"
           #Create scratch org
           - sfdx force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias installorg --wait 10 --durationdays 1
           - sfdx force:org:display --targetusername installorg
