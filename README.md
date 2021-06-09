@@ -56,9 +56,9 @@ openssl enc -nosalt -aes-256-cbc -in assets/server.key -out assets/server.key.en
 
 12) Create the first package version: `sfdx force:package:version:create --package "BitbucketPipelines" --installationkeybypass --wait 10 --json --targetdevhubusername HubOrg`
 
-13) In the `config.yml`: Update the value in the `PACKAGENAME` variable to be the Package ID in your `sfdx-project.json` file.  This ID starts with `0Ho`.
+13) In the `bitbucket-pipelines.yml`: Update the value in the `PACKAGENAME` variable to be the Package ID in your `sfdx-project.json` file.  This ID starts with `0Ho`.
 
-14) Commit the updated `sfdx-project.json`,`config.yml`, and `server.key.enc` files.
+14) Commit the updated `sfdx-project.json`,`bitbucket-pipelines.yml`, and `server.key.enc` files.
 
 Now you're ready to go! When you commit and push a change, you change kicks off a Bitbucket Pipelines build.
 

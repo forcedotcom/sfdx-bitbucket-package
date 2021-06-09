@@ -47,12 +47,11 @@ pipelines:
           - PACKAGEVERSION="$(sfdx force:package:version:create --package $PACKAGENAME --installationkeybypass --wait 10 --json --targetdevhubusername HubOrg | jq '.result.SubscriberPackageVersionId' | tr -d '"')"
           - echo "Package Version Id - "${PACKAGEVERSION}
           - echo "Waiting for 5 minutes for package replication"
-          - sleep 5m
           #Create scratch org
           - sfdx force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias installorg --wait 10 --durationdays 1
           - sfdx force:org:display --targetusername installorg
           #Install package in scratch org
-          - sfdx force:package:install --package $PACKAGEVERSION --wait 10 --targetusername installorg
+          - sfdx force:package:install --package $PACKAGEVERSION --publishwait 10 --wait 10 --targetusername installorg
           #Run unit tests on scratch org
           - sfdx force:apex:test:run --targetusername installorg --wait 10 --resultformat tap --codecoverage --testlevel $TESTLEVEL
           #Delete scratch org
